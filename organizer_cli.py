@@ -364,7 +364,7 @@ class OrganizerApp(App):
             if task.description:
                 display_text += f"\n      {task.description}"
             
-            item = ListItem(Static(display_text, classes=classes), id=f"task-{i}")
+            item = ListItem(Static(display_text, classes=classes))
             list_view.append(item)
         
         if 0 <= self.selected_index < len(list_view.children):
