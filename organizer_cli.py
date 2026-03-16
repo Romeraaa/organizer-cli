@@ -276,7 +276,7 @@ class OrganizerApp(App):
         with Container(id="main-container"):
             with Vertical(id="header-bar"):
                 yield Static(" ═════════════════════════════════════════════════ ", id="title-bar")
-                yield Static("│         ORGANIZER CLI v1.1         │", id="app-title")
+                yield Static("│            ORGANIZER CLI v1.1            │", id="app-title")
                 yield Static(" ═════════════════════════════════════════════════ ", id="title-bar-bottom")
             
             with Horizontal(id="nav-bar"):
