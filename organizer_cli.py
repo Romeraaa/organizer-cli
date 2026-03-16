@@ -40,7 +40,7 @@ Screen {
 }
 
 #content {
-    height: *;
+    height: auto;
     border: solid #30363d;
     padding: 1;
 }
@@ -60,13 +60,13 @@ ListItem {
     padding: 0 1;
 }
 
-ListItem:selected {
+ListItem:hover {
     background: #388bfd;
     color: #ffffff;
 }
 
 .task-completed {
-    text-style: strikethrough;
+    text-style: strike;
     color: #6e7681;
 }
 
