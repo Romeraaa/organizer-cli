@@ -16,9 +16,9 @@ from textual import work
 
 DATA_FILE = Path.home() / ".organizer_cli" / "tasks.json"
 
-CSS = """
+SCREEN_STYLES = """
 Screen {
-    background: $surface;
+    background: #0d1117;
 }
 
 #main-container {
@@ -28,67 +28,71 @@ Screen {
 
 #header-bar {
     height: 3;
-    background: $primary;
-    color: $text;
+    background: #58a6ff;
+    color: #c9d1d9;
     text-align: center;
 }
 
 #nav-bar {
     height: 3;
-    background: $surface-lighten-1;
+    background: #161b22;
     align: center middle;
 }
 
 #content {
     height: *;
-    border: solid $secondary;
+    border: solid #30363d;
     padding: 1;
 }
 
 #footer-bar {
     height: 3;
-    background: $surface-lighten-1;
+    background: #161b22;
     align: center middle;
 }
 
-TaskItem {
+ListView {
+    background: #0d1117;
+}
+
+ListItem {
     height: auto;
     padding: 0 1;
 }
 
-TaskItem:selected {
-    background: $accent;
+ListItem:selected {
+    background: #388bfd;
+    color: #ffffff;
 }
 
 .task-completed {
     text-style: strikethrough;
-    color: $text-muted;
+    color: #6e7681;
 }
 
 .task-pending {
-    color: $text;
+    color: #c9d1d9;
 }
 
 #new-task-form {
     height: auto;
     padding: 1 2;
-    background: $surface-lighten-1;
-    border: solid $primary;
+    background: #161b22;
+    border: solid #58a6ff;
 }
 
-NavButton {
+Button {
     margin: 0 1;
-    min-width: 12;
 }
 
-NavButton:hover {
-    background: $accent;
+Button:hover {
+    background: #388bfd;
 }
 
-.exit-menu {
+#exit-menu {
     align: center middle;
-    background: $surface;
-    border: solid $warning;
+    background: #0d1117;
+    border: solid #d29922;
     width: 40;
     height: auto;
     padding: 1 2;
@@ -197,7 +201,7 @@ class NewTaskModal(ModalScreen):
 class OrganizerApp(App):
     """Fullscreen terminal task manager."""
     
-    CSS = CSS
+    CSS = SCREEN_STYLES
     BINDINGS = [
         Binding("1", "show_tasks", "Tareas"),
         Binding("2", "show_calendar", "Calendario"),
