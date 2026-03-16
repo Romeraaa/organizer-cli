@@ -9,7 +9,7 @@ import datetime
 from pathlib import Path
 from textual.app import App, ComposeResult
 from textual.containers import Container, Horizontal, Vertical
-from textual.widgets import Header, Footer, Static, Button, Input, ListView, ListItem, Label
+from textual.widgets import Header, Footer, Static, Button, Input, ListView, ListItem, Label, OptionList
 from textual.screen import Screen, ModalScreen
 from textual.binding import Binding
 from textual import work
@@ -92,10 +92,42 @@ Button:hover {
 #exit-menu {
     align: center middle;
     background: #0d1117;
-    border: solid #d29922;
-    width: 40;
+    width: 100%;
+    height: 100%;
+}
+
+#exit-title {
+    text-align: center;
+    color: #58a6ff;
+    text-style: bold;
+}
+
+#exit-sep, #exit-sep2 {
+    color: #30363d;
+}
+
+#exit-hint {
+    text-align: center;
+    color: #6e7681;
+}
+
+#exit-options-container {
     height: auto;
-    padding: 1 2;
+    align: center middle;
+}
+
+OptionList {
+    background: #161b22;
+    border: solid #30363d;
+}
+
+OptionList > .option-list--option {
+    color: #c9d1d9;
+}
+
+OptionList > .option-list--option-highlighted {
+    background: #388bfd;
+    color: #ffffff;
 }
 """
 
@@ -146,19 +178,36 @@ class ExitMenu(ModalScreen):
     
     def compose(self) -> ComposeResult:
         with Vertical(id="exit-menu"):
-            yield Static("┌──────────────────────────┐", id="exit-border-top")
-            yield Static("│     [b]Salir?[/b]          │", id="exit-title")
-            yield Static("│                          │")
-            yield Static("│  [green]Y[/green] / [red]N[/red]  ", id="exit-options")
-            yield Static("└──────────────────────────┘", id="exit-border-bottom")
+            yield Static("┌──────────────────────────────────────────────┐", id="exit-border-top")
+            yield Static("│              ORGANIZER CLI                 │", id="exit-title")
+            yield Static("├──────────────────────────────────────────────┤", id="exit-sep")
+            with Vertical(id="exit-options-container"):
+                yield OptionList(
+                    "           Sí, salir de la aplicación            ",
+                    "           No, volver al programa                 ",
+                    id="exit-option-list"
+                )
+            yield Static("├──────────────────────────────────────────────┤", id="exit-sep2")
+            yield Static("│   [↑↓] navegar  [Enter] confirmar  [Esc] cancelar   │", id="exit-hint")
+            yield Static("└──────────────────────────────────────────────┘", id="exit-border-bottom")
     
     def on_mount(self) -> None:
-        self.query_one("#exit-title").focus()
+        self.query_one("#exit-option-list", OptionList).focus()
+    
+    def on_option_list_selected(self, event: OptionList.OptionSelected) -> None:
+        if event.option_index == 0:
+            self.app.exit()
+        else:
+            self.app.pop_screen()
     
     def on_key(self, event) -> None:
-        if event.key == "y":
-            self.app.exit()
-        elif event.key == "n" or event.key == "escape":
+        if event.key == "enter":
+            selected = self.query_one("#exit-option-list", OptionList).index
+            if selected == 0:
+                self.app.exit()
+            else:
+                self.app.pop_screen()
+        elif event.key == "escape":
             self.app.pop_screen()
 
 
