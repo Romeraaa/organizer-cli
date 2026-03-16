@@ -344,6 +344,9 @@ class OrganizerApp(App):
         if 0 <= self.selected_index < len(list_view.children):
             list_view.index = self.selected_index
     
+    def on_list_view_selected(self, event: ListView.Selected) -> None:
+        self.selected_index = event.list_view.index
+    
     def add_task(self, title: str, description: str = "") -> None:
         self.tasks.append(Task(title, description))
         save_tasks(self.tasks)
