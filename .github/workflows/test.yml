@@ -1,13 +1,14 @@
 name: Run Tests
 
 on:
+  push:
+    branches: [main, feature/**]
   pull_request:
     branches: [main]
-    types: [opened, synchronize, reopened, closed]
+    types: [opened, synchronize, reopened]
 
 jobs:
   test:
-    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     
     steps:
@@ -16,7 +17,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.x'
+        python-version: '3.12'
     
     - name: Install dependencies
       run: |
@@ -25,4 +26,5 @@ jobs:
     
     - name: Run tests
       run: |
-        pytest test/ -v
+        python -m compileall organizer_cli.py test
+        python -m pytest test/ -v
