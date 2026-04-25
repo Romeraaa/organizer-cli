@@ -56,6 +56,20 @@ La aplicación usa el calendario `primary` y el scope `https://www.googleapis.co
 python organizer_cli.py
 ```
 
+También puedes instalar un acceso directo local y ejecutar la app desde cualquier carpeta:
+
+```bash
+chmod +x scripts/organizer
+ln -s "$(pwd)/scripts/organizer" ~/.local/bin/organizer
+organizer
+```
+
+Comprueba el acceso directo con:
+
+```bash
+organizer --version
+```
+
 Atajos principales:
 
 | Tecla | Acción |
